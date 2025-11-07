@@ -1,10 +1,148 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Website</title>
-  </head>
-  <body>
-    <h1>Welcome to Otomate!</h1>
-    <p>Loading Soon.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Otomate.Work | AI Solutions for Diagnostic Labs</title>
+  <style>
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background-color: #101820;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #d1d1d1;
+    }
+    section {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    h2 {
+      color: #101820;
+      border-bottom: 2px solid #e3e3e3;
+      padding-bottom: 5px;
+    }
+    .solutions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h3 {
+      color: #0066cc;
+    }
+    footer {
+      background-color: #101820;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #004a99;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Otomate.Work</h1>
+    <p>Smarter Labs. Faster Operations. Happier Patients.</p>
+    <a href="#contact" class="cta-button">Get a Demo</a>
+  </header>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>At <strong>Otomate.Work</strong>, we build affordable AI tools for small and medium diagnostic labs that simplify operations, save time, and improve accuracy. Whether you're managing thousands of test requests, juggling inventory, or updating patients manually — our solutions bring automation where it matters most.</p>
+  </section>
+
+  <section id="solutions">
+    <h2>Our Solutions</h2>
+    <div class="solutions">
+      <div class="card">
+        <h3>🧠 AI Chatbots for Labs</h3>
+        <p>Automate patient inquiries, appointment booking, and sample status updates. Integrates with WhatsApp, websites, and LIMS for seamless support.</p>
+      </div>
+      <div class="card">
+        <h3>📦 AI-Powered Inventory Management</h3>
+        <p>Track reagent and consumable usage in real time. Receive low-stock alerts and expiry notifications with a visual dashboard.</p>
+      </div>
+      <div class="card">
+        <h3>📤 Automated Result Delivery</h3>
+        <p>Deliver reports securely to patients or providers instantly. Reduce manual effort and support HIPAA-compliant communication workflows.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <h2>Why Choose Otomate.Work</h2>
+    <ul>
+      <li>✅ Tailored for small & mid-sized labs</li>
+      <li>✅ No IT team required — quick setup</li>
+      <li>✅ HIPAA-ready architecture</li>
+      <li>✅ 70% faster turnaround and reduced admin load</li>
+    </ul>
+  </section>
+
+  <section id="how">
+    <h2>How It Works</h2>
+    <ol>
+      <li><strong>Connect your lab data</strong> – via simple forms or LIMS API.</li>
+      <li><strong>Train your AI agent</strong> – upload sample FAQs or workflows.</li>
+      <li><strong>Automate daily tasks</strong> – chatbot replies, report delivery, and alerts.</li>
+      <li><strong>Track insights</strong> – from patient engagement to reagent usage.</li>
+    </ol>
+  </section>
+
+  <section id="testimonials">
+    <h2>What Labs Say</h2>
+    <blockquote>“Within weeks, we automated 80% of patient queries and eliminated 3 hours of daily admin time.”<br><em>– Dr. R. Shah, PathLab Diagnostics</em></blockquote>
+    <blockquote>“Our reagent tracking and result notifications are now completely automated — it’s like having an extra team member!”<br><em>– K. Mehta, MedStar Labs</em></blockquote>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Ready to bring AI to your lab? We'd love to hear from you.</p>
+    <p><strong>Email:</strong> [Add your contact email here]</p>
+    <p><strong>Location:</strong> Houston, TX — serving labs globally</p>
+  </section>
+
+  <footer>
+    <p>© 2025 Otomate.Work — AI Automation for Diagnostic Labs</p>
+  </footer>
+</body>
 </html>
+
