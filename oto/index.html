@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data:;">
+    <title>OTO - Inventory Management System</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; height: 100%; }
+        body { display: flex; flex-direction: column; }
+        .navbar { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-title { font-size: 20px; font-weight: 700; color: #1e40af; }
+        .user-info { display: flex; gap: 15px; align-items: center; font-size: 14px; }
+        .logout-btn { padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .logout-btn:hover { background: #dc2626; }
+        .container { display: flex; flex: 1; overflow: hidden; }
+        .sidebar { width: 250px; background: #fff; border-right: 1px solid #e2e8f0; padding: 20px; overflow-y: auto; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 10px; }
+        .sidebar-menu button { width: 100%; padding: 12px 15px; background: transparent; border: 1px solid #e2e8f0; border-radius: 4px; cursor: pointer; font-size: 14px; color: #1e293b; }
+        .sidebar-menu button:hover, .sidebar-menu button.active { background: #1e40af; color: white; border-color: #1e40af; }
+        .main-content { flex: 1; padding: 20px; overflow-y: auto; }
+        .view { display: none; }
+        .view.active { display: block; }
+        .section-title { font-size: 24px; font-weight: 600; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 5px; font-size: 14px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 4px; font-family: inherit; font-size: 14px; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #1e40af; box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1); }
+        .btn { padding: 10px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; display: inline-block; }
+        .btn-primary { background: #1e40af; color: white; }
+        .btn-primary:hover { background: #1e3a8a; }
+        .btn-secondary { background: #f1f5f9; color: #1e293b; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e2e8f0; }
+        thead { background: #f8fafc; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { font-weight: 600; border-bottom: 2px solid #e2e8f0; }
+        tr:hover { background: #f8fafc; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #7f1d1d; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: #fff; padding: 25px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { font-size: 20px; font-weight: 600; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b; }
+        .login-container { display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); }
+        .login-card { background: #fff; padding: 40px; border-radius: 8px; width: 100%; max-width: 400px; }
+        .login-title { font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 5px; color: #1e40af; }
+        .login-subtitle { text-align: center; color: #64748b; margin-bottom: 30px; font-size: 14px; }
+        .alert { padding: 12px 15px; border-radius: 4px; margin-bottom: 15px; font-size: 14px; }
+        .alert-success { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+        .alert-error { background: #fee2e2; color: #7f1d1d; border-left: 4px solid #ef4444; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: #fff; padding: 20px; border-radius: 8px; border-left: 4px solid #1e40af; }
+        .stat-label { font-size: 12px; color: #64748b; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+        .stat-value { font-size: 28px; font-weight: 600; color: #1e40af; }
+        .demo-info { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 12px; color: #64748b; }
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; display: flex; border-right: none; border-bottom: 1px solid #e2e8f0; overflow-x: auto; }
+            .sidebar-menu { display: flex; gap: 10px; }
+            .sidebar-menu li { margin-bottom: 0; flex: 0 0 auto; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN VIEW -->
+    <div id="loginView" class="view active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-title">OTO</div>
+                <div class="login-subtitle">Inventory Management System</div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Sign In</button>
+                </form>
+                <div class="demo-info">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>scientist@lab.com / password</p>
+                    <p>manager@lab.com / password</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP VIEW -->
+    <div id="mainView" class="view">
+        <div class="navbar">
+            <div class="navbar-title">OTO Inventory Management</div>
+            <div class="user-info">
+                <span id="userDisplay"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><button class="sidebar-btn active" onclick="switchView('dashboard')">📊 Dashboard</button></li>
+                    <li><button class="sidebar-btn" onclick="switchView('inventory')">📦 Inventory</button></li>
+                    <li><button class="sidebar-btn" onclick="switchView('scan')">📱 Scan & Use</button></li>
+                    <li><button class="sidebar-btn" onclick="switchView('usage-log')">📋 Usage Log</button></li>
+                    <li><button class="sidebar-btn" onclick="switchView('alerts')">🔔 Alerts</button></li>
+                    <li id="operationsMenus" style="display: none;"><button class="sidebar-btn" onclick="switchView('add-item')">➕ Add Item</button></li>
+                    <li id="operationsMenus" style="display: none;"><button class="sidebar-btn" onclick="switchView('reports')">📈 Reports</button></li>
+                </ul>
+            </div>
+            <div class="main-content">
+                <!-- Dashboard -->
+                <div id="dashboard" class="view active">
+                    <div class="section-title">Dashboard</div>
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-label">Total Items</div><div class="stat-value" id="totalItems">0</div></div>
+                        <div class="stat-card"><div class="stat-label">Low Stock</div><div class="stat-value" id="lowStockCount" style="color: #f59e0b;">0</div></div>
+                        <div class="stat-card"><div class="stat-label">Expired</div><div class="stat-value" id="expiredCount" style="color: #ef4444;">0</div></div>
+                        <div class="stat-card"><div class="stat-label">Today Usage</div><div class="stat-value" id="todayUsage">0</div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Recent Activity</div>
+                        <div id="recentActivityList" style="font-size: 14px; color: #64748b;"><p>No recent activity</p></div>
+                    </div>
+                </div>
+
+                <!-- Inventory -->
+                <div id="inventory" class="view">
+                    <div class="section-title">Inventory</div>
+                    <div class="card">
+                        <input type="text" id="searchInput" placeholder="Search items..." style="width: 100%; padding: 10px; margin-bottom: 15px;">
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead><tr><th>Name</th><th>Qty</th><th>Unit</th><th>LOT</th><th>Batch</th><th>Exp</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody id="inventoryTable"><tr><td colspan="8" style="text-align: center; padding: 20px;">No items</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Scan -->
+                <div id="scan" class="view">
+                    <div class="section-title">Scan & Deduct</div>
+                    <div class="card">
+                        <div class="card-title">QR Code Scanner</div>
+                        <div class="form-group"><label>Scan or Enter Item ID:</label><input type="text" id="scanInput" placeholder="Scan QR code here..." autofocus></div>
+                        <div class="form-group"><label>Your Initials:</label><input type="text" id="userInitials" placeholder="e.g., JD" maxlength="3"></div>
+                        <button class="btn btn-primary" onclick="processScannedItem()">Deduct 1 Unit</button>
+                    </div>
+                    <div id="scanAlert"></div>
+                    <div id="itemDetails"></div>
+                </div>
+
+                <!-- Usage Log -->
+                <div id="usage-log" class="view">
+                    <div class="section-title">Usage Log</div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead><tr><th>Date & Time</th><th>Item</th><th>Qty</th><th>Initials</th><th>Remaining</th></tr></thead>
+                            <tbody id="usageLogTable"><tr><td colspan="5" style="text-align: center; padding: 20px;">No records</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Alerts -->
+                <div id="alerts" class="view">
+                    <div class="section-title">Reorder Alerts</div>
+                    <div id="alertsList"></div>
+                </div>
+
+                <!-- Add Item -->
+                <div id="add-item" class="view">
+                    <div class="section-title">Add New Item</div>
+                    <div class="card">
+                        <form id="addItemForm">
+                            <div class="form-group"><label>Item Name *</label><input type="text" id="itemName" required></div>
+                            <div class="form-group"><label>Quantity *</label><input type="number" id="itemQuantity" required min="1"></div>
+                            <div class="form-group"><label>Unit Type</label><input type="text" id="itemUnit"></div>
+                            <div class="form-group"><label>LOT Number</label><input type="text" id="itemLOT"></div>
+                            <div class="form-group"><label>Batch Number</label><input type="text" id="itemBatch"></div>
+                            <div class="form-group"><label>Expiration Date</label><input type="date" id="itemExpDate"></div>
+                            <div class="form-group"><label>Opened Date</label><input type="date" id="itemOpenedDate"></div>
+                            <div class="form-group"><label>Supplier Name</label><input type="text" id="itemSupplier"></div>
+                            <div class="form-group"><label>Reorder Threshold</label><input type="number" id="itemThreshold" min="1" value="10"></div>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary">Add Item</button>
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('addItemForm').reset()">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Reports -->
+                <div id="reports" class="view">
+                    <div class="section-title">Reports</div>
+                    <div class="card">
+                        <div class="card-title">Export Data</div>
+                        <button class="btn btn-primary" onclick="exportToCSV()">📥 Export Inventory to CSV</button>
+                        <button class="btn btn-secondary" style="margin-left: 10px;" onclick="exportUsageLog()">📥 Export Usage Log to CSV</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // NO EXTERNAL DEPENDENCIES - ALL CODE INLINE
+        // DATA STORAGE
+        const users = [
+            { email: 'scientist@lab.com', password: 'password', name: 'Lab Scientist', role: 'scientist' },
+            { email: 'manager@lab.com', password: 'password', name: 'Operations Manager', role: 'manager' }
+        ];
+
+        let currentUser = null;
+        let inventoryData = [];
+        let usageLog = [];
+        let alerts = [];
+
+        // INITIALIZE
+        function init() {
+            try {
+                const saved = localStorage.getItem('oto_user');
+                if (saved) {
+                    currentUser = JSON.parse(saved);
+                    inventoryData = JSON.parse(localStorage.getItem('oto_inventory') || '[]');
+                    usageLog = JSON.parse(localStorage.getItem('oto_usage') || '[]');
+                    alerts = JSON.parse(localStorage.getItem('oto_alerts') || '[]');
+                    showMainApp();
+                    updateUI();
+                }
+            } catch(e) {
+                console.log('Init error (expected):', e.message);
+            }
+        }
+
+        // LOGIN
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('oto_user', JSON.stringify(user));
+                showMainApp();
+                updateUI();
+                document.getElementById('loginForm').reset();
+            } else {
+                alert('Invalid email or password');
+            }
+        });
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('oto_user');
+            localStorage.removeItem('oto_inventory');
+            localStorage.removeItem('oto_usage');
+            localStorage.removeItem('oto_alerts');
+            document.getElementById('loginView').classList.add('active');
+            document.getElementById('mainView').classList.remove('active');
+            document.getElementById('loginForm').reset();
+        }
+
+        function showMainApp() {
+            document.getElementById('loginView').classList.remove('active');
+            document.getElementById('mainView').classList.add('active');
+            document.getElementById('userDisplay').textContent = currentUser.name + ' (' + currentUser.role + ')';
+            document.querySelectorAll('#operationsMenus').forEach(el => {
+                el.style.display = currentUser.role === 'manager' ? 'block' : 'none';
+            });
+        }
+
+        // VIEW SWITCHING
+        function switchView(viewName) {
+            document.querySelectorAll('.main-content .view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewName).classList.add('active');
+            document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if (viewName === 'inventory') loadInventory();
+            if (viewName === 'usage-log') loadUsageLog();
+            if (viewName === 'alerts') loadAlerts();
+            if (viewName === 'dashboard') loadDashboard();
+        }
+
+        // INVENTORY MANAGEMENT
+        function generateUniqueId() {
+            return 'ITEM-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+        }
+
+        document.getElementById('addItemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (currentUser.role !== 'manager') {
+                alert('Only managers can add items');
+                return;
+            }
+            const item = {
+                id: generateUniqueId(),
+                name: document.getElementById('itemName').value,
+                quantity: parseInt(document.getElementById('itemQuantity').value),
+                unit: document.getElementById('itemUnit').value,
+                lot: document.getElementById('itemLOT').value,
+                batch: document.getElementById('itemBatch').value,
+                expDate: document.getElementById('itemExpDate').value,
+                openedDate: document.getElementById('itemOpenedDate').value,
+                supplier: document.getElementById('itemSupplier').value,
+                threshold: parseInt(document.getElementById('itemThreshold').value)
+            };
+            inventoryData.push(item);
+            localStorage.setItem('oto_inventory', JSON.stringify(inventoryData));
+            alert('Item added! ID: ' + item.id);
+            document.getElementById('addItemForm').reset();
+            updateUI();
+        });
+
+        function loadInventory() {
+            const table = document.getElementById('inventoryTable');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (inventoryData.length === 0) {
+                table.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 20px;">No items</td></tr>';
+                return;
+            }
+            const filtered = inventoryData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) || item.supplier.toLowerCase().includes(searchTerm)
+            );
+            const today = new Date().toISOString().split('T')[0];
+            table.innerHTML = filtered.map(item => {
+                const isExpired = item.expDate && item.expDate < today;
+                const isLowStock = item.quantity <= item.threshold;
+                let status = '<span class="badge badge-success">Good</span>';
+                if (isExpired) status = '<span class="badge badge-danger">Expired</span>';
+                else if (isLowStock) status = '<span class="badge badge-warning">Low Stock</span>';
+                return '<tr><td><strong>' + item.name + '</strong></td><td>' + item.quantity + '</td><td>' + item.unit + '</td><td>' + item.lot + '</td><td>' + item.batch + '</td><td>' + item.expDate + '</td><td>' + status + '</td><td>' + (currentUser.role === 'manager' ? '<button class="btn btn-danger" onclick="deleteItem(\'' + item.id + '\')" style="font-size: 12px;">Delete</button>' : '') + '</td></tr>';
+            }).join('');
+        }
+
+        document.getElementById('searchInput').addEventListener('input', loadInventory);
+
+        function deleteItem(itemId) {
+            if (confirm('Delete this item?')) {
+                inventoryData = inventoryData.filter(item => item.id !== itemId);
+                localStorage.setItem('oto_inventory', JSON.stringify(inventoryData));
+                loadInventory();
+            }
+        }
+
+        // SCAN & DEDUCT
+        function processScannedItem() {
+            const scanInput = document.getElementById('scanInput').value.trim();
+            const initials = document.getElementById('userInitials').value.trim();
+            const alertDiv = document.getElementById('scanAlert');
+            const detailsDiv = document.getElementById('itemDetails');
+            alertDiv.innerHTML = '';
+            detailsDiv.innerHTML = '';
+            if (!scanInput) { alertDiv.innerHTML = '<div class="alert alert-error">Please scan or enter an item ID</div>'; return; }
+            if (!initials) { alertDiv.innerHTML = '<div class="alert alert-error">Please enter your initials</div>'; return; }
+            const item = inventoryData.find(i => i.id === scanInput);
+            if (!item) { alertDiv.innerHTML = '<div class="alert alert-error">Item not found</div>'; return; }
+            if (item.quantity <= 0) { alertDiv.innerHTML = '<div class="alert alert-error">Item is out of stock</div>'; return; }
+            item.quantity -= 1;
+            localStorage.setItem('oto_inventory', JSON.stringify(inventoryData));
+            const logEntry = {
+                timestamp: new Date().toISOString(),
+                itemId: item.id,
+                itemName: item.name,
+                quantityDeducted: 1,
+                scientistInitials: initials,
+                remainingStock: item.quantity
+            };
+            usageLog.unshift(logEntry);
+            localStorage.setItem('oto_usage', JSON.stringify(usageLog));
+            if (item.quantity <= item.threshold) {
+                const existingAlert = alerts.find(a => a.itemId === item.id && a.status === 'Pending');
+                if (!existingAlert) {
+                    alerts.unshift({
+                        id: generateUniqueId(),
+                        itemId: item.id,
+                        itemName: item.name,
+                        currentQuantity: item.quantity,
+                        threshold: item.threshold,
+                        createdAt: new Date().toISOString(),
+                        status: 'Pending'
+                    });
+                    localStorage.setItem('oto_alerts', JSON.stringify(alerts));
+                }
+            }
+            alertDiv.innerHTML = '<div class="alert alert-success">✓ 1 unit deducted from ' + item.name + '</div>';
+            detailsDiv.innerHTML = '<div class="card"><div class="card-title">' + item.name + '</div><p><strong>Remaining Stock:</strong> ' + item.quantity + ' ' + item.unit + '</p><p><strong>User:</strong> ' + initials + '</p><p><strong>Time:</strong> ' + new Date().toLocaleString() + '</p></div>';
+            document.getElementById('scanInput').value = '';
+            updateUI();
+        }
+
+        document.getElementById('scanInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') processScannedItem();
+        });
+
+        // USAGE LOG
+        function loadUsageLog() {
+            const table = document.getElementById('usageLogTable');
+            if (usageLog.length === 0) {
+                table.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No records</td></tr>';
+                return;
+            }
+            table.innerHTML = usageLog.map(log => '<tr><td>' + new Date(log.timestamp).toLocaleString() + '</td><td>' + log.itemName + '</td><td>' + log.quantityDeducted + '</td><td>' + log.scientistInitials + '</td><td>' + log.remainingStock + '</td></tr>').join('');
+        }
+
+        // ALERTS
+        function loadAlerts() {
+            const alertsList = document.getElementById('alertsList');
+            if (alerts.length === 0) {
+                alertsList.innerHTML = '<div class="card"><p>No reorder alerts</p></div>';
+                return;
+            }
+            alertsList.innerHTML = alerts.map(alert => '<div class="card"><div style="display: flex; justify-content: space-between;"><div><div class="card-title">' + alert.itemName + '</div><p><strong>Current Qty:</strong> ' + alert.currentQuantity + '</p><p><strong>Threshold:</strong> ' + alert.threshold + '</p><span class="badge ' + (alert.status === 'Pending' ? 'badge-warning' : 'badge-success') + '">' + alert.status + '</span></div>' + (currentUser.role === 'manager' ? '<button class="btn btn-primary" onclick="markAlertResolved(\'' + alert.id + '\')">Mark Ordered</button>' : '') + '</div></div>').join('');
+        }
+
+        function markAlertResolved(alertId) {
+            const alert = alerts.find(a => a.id === alertId);
+            if (alert) {
+                alert.status = 'Ordered';
+                localStorage.setItem('oto_alerts', JSON.stringify(alerts));
+                loadAlerts();
+            }
+        }
+
+        // DASHBOARD
+        function loadDashboard() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('totalItems').textContent = inventoryData.length;
+            const lowStock = inventoryData.filter(i => i.quantity <= i.threshold).length;
+            document.getElementById('lowStockCount').textContent = lowStock;
+            const expired = inventoryData.filter(i => i.expDate && i.expDate < today).length;
+            document.getElementById('expiredCount').textContent = expired;
+            const todayUsage = usageLog.filter(log => log.timestamp.split('T')[0] === today).length;
+            document.getElementById('todayUsage').textContent = todayUsage;
+            const recentActivity = document.getElementById('recentActivityList');
+            const recent = usageLog.slice(0, 5);
+            if (recent.length === 0) {
+                recentActivity.innerHTML = '<p>No recent activity</p>';
+            } else {
+                recentActivity.innerHTML = recent.map(log => '<p>📦 <strong>' + log.itemName + '</strong> - Deducted by ' + log.scientistInitials + ' at ' + new Date(log.timestamp).toLocaleTimeString() + '</p>').join('');
+            }
+        }
+
+        // EXPORT
+        function exportToCSV() {
+            let csv = 'Item Name,Quantity,Unit,LOT,Batch,Expiration Date,Supplier,Threshold\n';
+            inventoryData.forEach(item => {
+                csv += '"' + item.name + '","' + item.quantity + '","' + item.unit + '","' + item.lot + '","' + item.batch + '","' + item.expDate + '","' + item.supplier + '","' + item.threshold + '"\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'inventory_' + new Date().toISOString().split('T')[0] + '.csv';
+            link.click();
+        }
+
+        function exportUsageLog() {
+            let csv = 'Date & Time,Item Name,Quantity Deducted,Scientist Initials,Remaining Stock\n';
+            usageLog.forEach(log => {
+                csv += '"' + new Date(log.timestamp).toLocaleString() + '","' + log.itemName + '","' + log.quantityDeducted + '","' + log.scientistInitials + '","' + log.remainingStock + '"\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'usage_log_' + new Date().toISOString().split('T')[0] + '.csv';
+            link.click();
+        }
+
+        // UI UPDATE
+        function updateUI() {
+            loadDashboard();
+        }
+
+        // STARTUP
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
