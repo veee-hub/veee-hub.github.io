@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otomate.Work - AI Solutions for Diagnostic Labs</title>
+    <title>Otomate.Work - AI Inventory for Diagnostic Labs</title>
     <style>
         :root {
-            --color-primary: #258BCB;   /* blue */
-            --color-accent: #00D9FF;    /* cyan */
-            --color-secondary: #6C5CE7; /* subtle accent purple */
-            --color-dark: #111827;      /* text on light backgrounds */
-            --color-light: #F8F9FA;     /* main background */
-            --color-surface: #ffffff;   /* cards / nav backgrounds */
-            --color-gray: #6B7280;
+            --color-primary: #258BCB;   /* core blue */
+            --color-accent: #00D9FF;    /* electric cyan */
+            --color-secondary: #6C5CE7; /* subtle accent */
+            --color-bg: #020617;        /* main background */
+            --color-bg-alt: #020922;    /* section background */
+            --color-surface: #020818;   /* panels / cards */
+            --color-border-subtle: rgba(148, 163, 184, 0.28);
+            --color-border-strong: rgba(37, 139, 203, 0.6);
+            --color-text-main: #E5E7EB;
+            --color-text-soft: #9CA3AF;
+            --color-text-muted: #6B7280;
             --color-success: #10b981;
         }
 
@@ -25,10 +29,11 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
             line-height: 1.6;
-            color: var(--color-dark);
-            background: radial-gradient(circle at top left, rgba(37,139,203,0.12), transparent 55%),
-                        radial-gradient(circle at bottom right, rgba(0,217,255,0.12), transparent 55%),
-                        var(--color-light);
+            color: var(--color-text-main);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(37,139,203,0.25), transparent 55%),
+                radial-gradient(circle at 100% 100%, rgba(0,217,255,0.18), transparent 50%),
+                var(--color-bg);
             overflow-x: hidden;
         }
 
@@ -37,10 +42,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(248, 249, 250, 0.9);
-            backdrop-filter: blur(14px);
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(18px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(37, 139, 203, 0.25);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.45);
         }
 
         .nav-container {
@@ -55,9 +61,11 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            font-size: 1.4rem;
+            gap: 0.55rem;
+            font-size: 1.35rem;
             font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
             background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -65,7 +73,7 @@
         }
 
         .logo img {
-            height: 30px;
+            height: 28px;
             width: auto;
             display: block;
         }
@@ -77,26 +85,25 @@
         }
 
         .nav-links a {
-            color: var(--color-dark);
+            color: var(--color-text-soft);
             text-decoration: none;
-            transition: color 0.2s, opacity 0.2s;
+            transition: color 0.18s, opacity 0.18s;
             font-weight: 500;
             font-size: 0.95rem;
             opacity: 0.85;
         }
 
         .nav-links a:hover {
-            color: var(--color-primary);
+            color: var(--color-accent);
             opacity: 1;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
             padding: 120px 1.5rem 80px;
         }
 
@@ -117,41 +124,43 @@
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            padding: 0.25rem 0.75rem;
+            padding: 0.25rem 0.8rem;
             border-radius: 999px;
-            font-size: 0.8rem;
-            background: rgba(37,139,203,0.08);
-            color: var(--color-primary);
+            font-size: 0.78rem;
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--color-accent);
+            border: 1px solid rgba(148,163,184,0.4);
             margin-bottom: 1rem;
         }
 
         .hero-pill-dot {
             width: 8px;
             height: 8px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 999px;
+            background: radial-gradient(circle, var(--color-accent), var(--color-primary));
+            box-shadow: 0 0 10px rgba(0,217,255,0.9);
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.9rem;
             font-weight: 800;
-            margin-bottom: 1.2rem;
-            background: linear-gradient(135deg, #0F172A 0%, var(--color-primary) 40%, var(--color-accent) 90%);
+            margin-bottom: 1.1rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--color-accent) 40%, var(--color-primary) 90%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.15;
-        }
-
-        .hero-highlight {
-            color: var(--color-primary);
+            line-height: 1.12;
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--color-gray);
-            margin-bottom: 1.8rem;
+            font-size: 1.05rem;
+            color: var(--color-text-soft);
+            margin-bottom: 1.7rem;
             max-width: 540px;
+        }
+
+        .hero-subtitle strong {
+            color: var(--color-accent);
         }
 
         .hero-actions {
@@ -166,26 +175,26 @@
             align-items: center;
             justify-content: center;
             padding: 0.9rem 2.4rem;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
             color: white;
             text-decoration: none;
             border-radius: 999px;
             font-weight: 600;
             font-size: 0.98rem;
-            letter-spacing: 0.01em;
-            box-shadow: 0 14px 35px rgba(37,139,203,0.35);
+            letter-spacing: 0.03em;
+            box-shadow: 0 16px 40px rgba(0, 217, 255, 0.4);
             border: none;
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
         .cta-button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 20px 45px rgba(37,139,203,0.45);
+            box-shadow: 0 22px 55px rgba(0, 217, 255, 0.55);
         }
 
         .secondary-link {
             font-size: 0.95rem;
-            color: var(--color-primary);
+            color: var(--color-text-soft);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -195,6 +204,7 @@
 
         .secondary-link span {
             font-size: 1rem;
+            color: var(--color-accent);
         }
 
         .hero-metrics {
@@ -203,11 +213,11 @@
             gap: 1.5rem;
             margin-top: 1.8rem;
             font-size: 0.88rem;
-            color: var(--color-gray);
+            color: var(--color-text-muted);
         }
 
         .hero-metrics strong {
-            color: var(--color-primary);
+            color: var(--color-accent);
         }
 
         /* Hero Visual */
@@ -216,11 +226,14 @@
         }
 
         .hero-card {
-            background: radial-gradient(circle at top left, rgba(0,217,255,0.16), rgba(255,255,255,0.98));
-            border-radius: 24px;
-            padding: 1.6rem 1.5rem;
-            box-shadow: 0 18px 60px rgba(15,23,42,0.12);
-            border: 1px solid rgba(37,139,203,0.25);
+            background:
+                radial-gradient(circle at top left, rgba(0,217,255,0.28), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(37,139,203,0.35), transparent 60%),
+                #020617;
+            border-radius: 26px;
+            padding: 1.8rem 1.6rem;
+            box-shadow: 0 22px 70px rgba(15,23,42,0.85);
+            border: 1px solid rgba(148,163,184,0.45);
             position: relative;
             overflow: hidden;
         }
@@ -229,81 +242,82 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .hero-card-title {
             font-size: 0.9rem;
             font-weight: 600;
-            color: var(--color-dark);
+            color: var(--color-text-main);
         }
 
         .hero-chip {
             font-size: 0.75rem;
-            padding: 0.25rem 0.6rem;
+            padding: 0.25rem 0.7rem;
             border-radius: 999px;
-            background: rgba(37,139,203,0.08);
-            color: var(--color-primary);
+            background: rgba(15,23,42,0.9);
+            color: var(--color-accent);
+            border: 1px solid rgba(0,217,255,0.65);
         }
 
         .hero-bars {
-            margin-top: 0.5rem;
+            margin-top: 0.6rem;
         }
 
         .hero-bar {
             height: 7px;
             border-radius: 999px;
-            background: rgba(148,163,184,0.25);
+            background: rgba(30,64,175,0.4);
             overflow: hidden;
             margin-bottom: 0.35rem;
         }
 
         .hero-bar-fill-1 {
-            width: 88%;
+            width: 90%;
             height: 100%;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
         }
 
         .hero-bar-fill-2 {
             width: 72%;
             height: 100%;
-            background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
         }
 
         .hero-bar-fill-3 {
-            width: 56%;
+            width: 58%;
             height: 100%;
-            background: linear-gradient(90deg, #A855F7, var(--color-accent));
+            background: linear-gradient(90deg, #22C55E, var(--color-accent));
         }
 
         .hero-tagline {
-            margin-top: 1rem;
-            font-size: 0.86rem;
-            color: var(--color-gray);
+            margin-top: 1.1rem;
+            font-size: 0.84rem;
+            color: var(--color-text-soft);
         }
 
         .hero-orbit {
             position: absolute;
-            inset: -20%;
+            inset: -25%;
             border-radius: 999px;
-            border: 1px dashed rgba(37,139,203,0.25);
+            border: 1px dashed rgba(148,163,184,0.45);
             pointer-events: none;
         }
 
         .hero-glow {
             position: absolute;
-            width: 220px;
-            height: 220px;
+            width: 230px;
+            height: 230px;
             border-radius: 999px;
-            background: radial-gradient(circle, rgba(0,217,255,0.45), transparent 70%);
-            bottom: -80px;
-            right: -60px;
-            opacity: 0.7;
+            background: radial-gradient(circle, rgba(0,217,255,0.6), transparent 70%);
+            bottom: -90px;
+            right: -70px;
+            opacity: 0.8;
         }
 
         /* Sections */
-        .services, .benefits, .contact {
-            padding: 5rem 1.5rem;
+        .section {
+            padding: 4.8rem 1.5rem;
         }
 
         .section-inner {
@@ -315,7 +329,7 @@
             text-align: center;
             font-size: 2.2rem;
             margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, #0F172A 0%, var(--color-primary) 50%, var(--color-accent) 100%);
+            background: linear-gradient(135deg, #E5E7EB 0%, var(--color-accent) 40%, var(--color-primary) 90%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -323,24 +337,29 @@
 
         .section-subtitle {
             text-align: center;
-            color: var(--color-gray);
-            margin-bottom: 3.2rem;
-            font-size: 1rem;
+            color: var(--color-text-soft);
+            margin-bottom: 3rem;
+            font-size: 0.98rem;
         }
 
-        /* Services Cards */
+        /* Services (product focus: inventory) */
+        .services {
+            background: radial-gradient(circle at top, rgba(0,217,255,0.16), transparent 55%),
+                        var(--color-bg-alt);
+        }
+
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+            gap: 2.2rem;
         }
 
         .service-card {
-            background: var(--color-surface);
-            border-radius: 20px;
-            padding: 2.4rem 2rem;
-            border: 1px solid rgba(37,139,203,0.16);
-            box-shadow: 0 12px 35px rgba(15,23,42,0.06);
+            background: rgba(2,8,23,0.96);
+            border-radius: 22px;
+            padding: 2.3rem 2rem;
+            border: 1px solid rgba(148,163,184,0.5);
+            box-shadow: 0 18px 55px rgba(15,23,42,0.9);
             position: relative;
             overflow: hidden;
         }
@@ -349,41 +368,42 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top left, rgba(0,217,255,0.14), transparent 60%);
-            opacity: 0.9;
+            background: radial-gradient(circle at top left, rgba(0,217,255,0.22), transparent 60%);
+            opacity: 0.95;
             pointer-events: none;
         }
 
         .service-icon {
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-            border-radius: 18px;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
-            color: white;
+            color: #020617;
             margin-bottom: 1.3rem;
+            box-shadow: 0 12px 32px rgba(0, 217, 255, 0.7);
         }
 
         .service-card h3 {
             font-size: 1.5rem;
             margin-bottom: 0.4rem;
-            color: var(--color-dark);
+            color: var(--color-text-main);
         }
 
         .service-card .product-name {
-            color: var(--color-primary);
+            color: var(--color-accent);
             font-size: 0.95rem;
             font-weight: 600;
-            margin-bottom: 0.9rem;
-            letter-spacing: 0.04em;
+            margin-bottom: 0.95rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
         .service-card p {
-            color: var(--color-gray);
+            color: var(--color-text-soft);
             margin-bottom: 1.4rem;
             line-height: 1.7;
             font-size: 0.95rem;
@@ -397,110 +417,112 @@
 
         .features-list li {
             padding: 0.55rem 0;
-            color: var(--color-dark);
+            color: var(--color-text-main);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.55rem;
         }
 
         .features-list li::before {
-            content: '●';
+            content: '▹';
             color: var(--color-accent);
-            font-size: 0.5rem;
+            font-size: 0.8rem;
+            margin-top: 0.1rem;
         }
 
         /* Benefits */
         .benefits {
-            background: radial-gradient(circle at top, rgba(0,217,255,0.12), transparent 55%),
-                        var(--color-light);
+            background: radial-gradient(circle at top, rgba(37,139,203,0.2), transparent 55%),
+                        var(--color-bg);
         }
 
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 1.8rem;
+            gap: 1.9rem;
             margin-top: 1rem;
         }
 
         .benefit-item {
             text-align: left;
-            padding: 1.8rem 1.6rem;
-            background: rgba(255,255,255,0.9);
+            padding: 1.9rem 1.7rem;
+            background: rgba(2,8,23,0.95);
             border-radius: 18px;
-            border: 1px solid rgba(37,139,203,0.14);
-            box-shadow: 0 10px 30px rgba(15,23,42,0.05);
+            border: 1px solid var(--color-border-subtle);
+            box-shadow: 0 16px 45px rgba(15,23,42,0.85);
         }
 
         .benefit-shift {
-            margin-left: 24px;
+            margin-left: 20px;
         }
 
         .benefit-icon {
             font-size: 1.8rem;
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.6rem;
         }
 
         .benefit-item h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.4rem;
-            color: var(--color-dark);
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+            color: var(--color-text-main);
         }
 
         .benefit-item p {
-            color: var(--color-gray);
-            font-size: 0.94rem;
+            color: var(--color-text-soft);
+            font-size: 0.92rem;
         }
 
         /* Contact */
         .contact {
-            padding-bottom: 4.5rem;
+            background: radial-gradient(circle at center, rgba(0,217,255,0.2), transparent 55%),
+                        var(--color-bg-alt);
         }
 
         .contact-card {
-            max-width: 640px;
+            max-width: 620px;
             margin: 0 auto;
-            padding: 2.4rem 2.2rem;
-            background: linear-gradient(135deg, rgba(37,139,203,0.08), rgba(0,217,255,0.08));
+            padding: 2.5rem 2.2rem;
+            background: rgba(2,6,23,0.96);
             border-radius: 22px;
-            border: 1px solid rgba(37,139,203,0.25);
-            box-shadow: 0 18px 55px rgba(15,23,42,0.10);
+            border: 1px solid var(--color-border-strong);
+            box-shadow: 0 24px 70px rgba(15,23,42,0.95);
             text-align: center;
         }
 
         .contact-card h3 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             margin-bottom: 0.7rem;
-            color: var(--color-dark);
+            color: var(--color-text-main);
         }
 
         .contact-card a {
-            color: var(--color-primary);
+            color: var(--color-accent);
             text-decoration: none;
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             font-weight: 600;
         }
 
         .contact-card a:hover {
-            color: var(--color-accent);
+            color: var(--color-primary);
         }
 
         .contact-card p {
-            color: var(--color-gray);
+            color: var(--color-text-soft);
             margin-top: 0.9rem;
             font-size: 0.94rem;
         }
 
         /* Footer */
         footer {
-            background: #0F172A;
+            background: #020617;
             padding: 1.6rem;
             text-align: center;
-            border-top: 1px solid rgba(37,139,203,0.3);
+            border-top: 1px solid rgba(15,23,42,0.9);
         }
 
         footer p {
-            color: #9CA3AF;
-            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            font-size: 0.84rem;
         }
 
         /* Responsive */
@@ -524,11 +546,11 @@
             }
 
             .hero h1 {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
             }
 
             .hero-subtitle {
-                font-size: 0.98rem;
+                font-size: 0.96rem;
             }
 
             .hero-actions {
@@ -541,7 +563,6 @@
             }
         }
 
-        /* Smooth scroll */
         html {
             scroll-behavior: smooth;
         }
@@ -556,45 +577,45 @@
                 <span>Otomate.Work</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#benefits">Benefits</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#services">Product</a></li>
+                <li><a href="#benefits">Why it works</a></li>
+                <li><a href="#contact">Talk to us</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-content">
                 <div class="hero-pill">
                     <div class="hero-pill-dot"></div>
-                    Built for diagnostic laboratories
+                    AI inventory control for diagnostic labs
                 </div>
                 <h1>
-                    AI that keeps your<br>
-                    <span class="hero-highlight">lab running on autopilot.</span>
+                    Never guess your<br>
+                    inventory again.
                 </h1>
                 <p class="hero-subtitle">
-                    Smart automation for sample workflows, inventory, and support—designed for regulated diagnostic environments where uptime and compliance matter.
+                    Otomate.Work tracks every kit, reagent, and consumable in real time—forecasting demand, preventing stockouts, and cutting waste without touching your cloud data. <strong>Built for regulated labs first.</strong>
                 </p>
                 <div class="hero-actions">
-                    <a href="#contact" class="cta-button">Book a discovery call</a>
+                    <a href="#contact" class="cta-button">Book an inventory walkthrough</a>
                     <a href="#services" class="secondary-link">
-                        Explore products <span>→</span>
+                        See how OtoFlo works <span>→</span>
                     </a>
                 </div>
                 <div class="hero-metrics">
-                    <span><strong>30% less waste</strong> with inventory intelligence</span>
-                    <span><strong>Instant answers</strong> from on-prem AI assistant</span>
+                    <span><strong>30% less waste</strong> from expiry & over‑ordering</span>
+                    <span><strong>Zero surprises</strong> on critical test stock</span>
                 </div>
             </div>
             <div class="hero-visual">
                 <div class="hero-card">
                     <div class="hero-card-header">
                         <div>
-                            <div class="hero-card-title">Live lab performance</div>
-                            <small style="color: var(--color-gray); font-size: 0.78rem;">Powered by Otomate.Work</small>
+                            <div class="hero-card-title">Live inventory signal</div>
+                            <small style="color: var(--color-text-muted); font-size: 0.78rem;">OtoFlo – AI Inventory Engine</small>
                         </div>
                         <span class="hero-chip">On‑prem AI</span>
                     </div>
@@ -604,7 +625,7 @@
                         <div class="hero-bar"><div class="hero-bar-fill-3"></div></div>
                     </div>
                     <p class="hero-tagline">
-                        Route requests, monitor inventory, and surface insights in real time—without sending PHI to the cloud.
+                        One layer that sees orders, usage, expirations, and supplier lead times—and tells you what to buy, when, and for which sites.
                     </p>
                     <div class="hero-orbit"></div>
                     <div class="hero-glow"></div>
@@ -613,106 +634,113 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
+    <!-- Product / Services (Inventory-focused) -->
+    <section class="section services" id="services">
         <div class="section-inner">
-            <h2 class="section-title">Our Solutions</h2>
-            <p class="section-subtitle">Blueprinted for diagnostic labs that want reliable, compliant automation from day one.</p>
+            <h2 class="section-title">OtoFlo: AI inventory for real‑world labs</h2>
+            <p class="section-subtitle">Purpose‑built to keep diagnostic testing running—without over‑ordering, manual spreadsheets, or last‑minute courier saves.</p>
             
             <div class="services-grid">
-                <!-- OTO Chatbot -->
                 <div class="service-card">
-                    <div class="service-icon">🤖</div>
-                    <h3>AI Lab Assistant</h3>
-                    <div class="product-name">OTO</div>
-                    <p>Your on‑prem AI assistant for staff, support, and operations. Keep sensitive data inside your environment while still getting natural language answers.</p>
+                    <div class="service-icon">📊</div>
+                    <h3>Predictive stock visibility</h3>
+                    <div class="product-name">Demand & risk engine</div>
+                    <p>OtoFlo ingests usage, orders, and lead times to forecast exactly when each item will hit risk thresholds across your sites.</p>
                     <ul class="features-list">
-                        <li>100% on‑premise processing and storage</li>
-                        <li>HIPAA‑aligned architecture and controls</li>
-                        <li>Fielding staff & client questions 24/7</li>
-                        <li>Understands lab SOPs, panels, and workflows</li>
-                        <li>Connects with LIS, ticketing, and email</li>
-                        <li>Configurable guardrails and escalation paths</li>
+                        <li>Forward‑looking stockout prediction by test and location</li>
+                        <li>Dynamic min/max levels based on real consumption</li>
+                        <li>Signal when a kit or reagent drifts off expected usage</li>
+                        <li>Visibility into “hidden” slow‑moving and dead stock</li>
                     </ul>
                 </div>
 
-                <!-- OtoFlo Inventory -->
                 <div class="service-card">
-                    <div class="service-icon">📊</div>
-                    <h3>AI Inventory Management</h3>
-                    <div class="product-name">OtoFlo</div>
-                    <p>Always know what’s in stock, what’s at risk, and what needs to be ordered—before it becomes a problem for patient testing.</p>
+                    <div class="service-icon">📦</div>
+                    <h3>Guided replenishment</h3>
+                    <div class="product-name">Smart ordering workflows</div>
+                    <p>Turn noisy inventory into clear, actionable purchase suggestions tied to your suppliers and constraints.</p>
                     <ul class="features-list">
-                        <li>Real‑time stock visibility across locations</li>
-                        <li>Predictive reordering and demand forecasting</li>
-                        <li>Expiration tracking and waste reduction alerts</li>
-                        <li>Barcode‑driven intake and consumption</li>
-                        <li>Supplier‑aware recommendations</li>
-                        <li>Cost optimization insights for your team</li>
+                        <li>AI‑generated purchase suggestions your team can approve</li>
+                        <li>Supplier‑aware quantities based on pack sizes and MOQs</li>
+                        <li>Cross‑site balancing before you place new orders</li>
+                        <li>Audit‑ready trail of what was recommended and why</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⏱️</div>
+                    <h3>Expiry & waste control</h3>
+                    <div class="product-name">Shelf‑life intelligence</div>
+                    <p>Know which lots you’ll actually consume before expiry—and which ones need attention now.</p>
+                    <ul class="features-list">
+                        <li>Lot‑level views with time‑to‑expiry and burn‑down</li>
+                        <li>Alerts when stock is likely to expire unused</li>
+                        <li>Suggestions to re‑route inventory between sites</li>
+                        <li>Waste and cost dashboards that your CFO will trust</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
+    <!-- Benefits -->
+    <section class="section benefits" id="benefits">
         <div class="section-inner">
-            <h2 class="section-title">Built for real labs, not demos</h2>
-            <p class="section-subtitle">Everything is designed around uptime, compliance, and the realities of diagnostic operations.</p>
+            <h2 class="section-title">Built for diagnostic lab reality</h2>
+            <p class="section-subtitle">Otomate.Work is what you get when you design AI inventory around compliance, uptime, and operations—not generic SaaS playbooks.</p>
             
             <div class="benefits-grid">
                 <div class="benefit-item">
                     <div class="benefit-icon">🔒</div>
-                    <h4>Enterprise‑grade data control</h4>
-                    <p>Your data never leaves your infrastructure. You define what the AI sees and log every interaction for audit readiness.</p>
+                    <h4>On‑prem by default</h4>
+                    <p>Keep sensitive data inside your network. OtoFlo runs alongside your existing systems—with full control over what it sees and logs.</p>
                 </div>
                 <div class="benefit-item">
-                    <div class="benefit-icon">⚡</div>
-                    <h4>Fast for your team</h4>
-                    <p>Responses in seconds, not minutes. Keep staff focused on testing, not hunting for information or chasing inventory.</p>
+                    <div class="benefit-icon">⚙️</div>
+                    <h4>Understands lab operations</h4>
+                    <p>Designed around panels, lots, QC, and sample volumes—not generic warehouse workflows.</p>
                 </div>
                 <div class="benefit-item">
-                    <div class="benefit-icon">🎯</div>
-                    <h4>Lab‑specific intelligence</h4>
-                    <p>Tuned for diagnostic lab terminology, workflows, and edge cases—not generic office processes.</p>
+                    <div class="benefit-icon">📡</div>
+                    <h4>Signals, not dashboards</h4>
+                    <p>Clear calls to action: move this stock, buy this quantity, flag this test risk—so teams can act quickly.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon">💰</div>
-                    <h4>Less waste, better margins</h4>
-                    <p>Identify over‑ordering, slow movers, and expiry risks before they hit your P&amp;L.</p>
+                    <h4>Waste drops, confidence rises</h4>
+                    <p>Shrink waste, missed expiries, and emergency orders while your lab leaders gain a live view of risk and spend.</p>
                 </div>
                 <div class="benefit-item benefit-shift">
                     <div class="benefit-icon">📈</div>
-                    <h4>Scales with your volumes</h4>
-                    <p>From single‑site labs to multi‑location operations, keep performance consistent as volumes grow.</p>
+                    <h4>Scales with volume</h4>
+                    <p>Add new locations, tests, or vendors without rebuilding spreadsheets or retraining teams from scratch.</p>
                 </div>
                 <div class="benefit-item benefit-shift">
                     <div class="benefit-icon">🔄</div>
-                    <h4>Plays well with your stack</h4>
-                    <p>Works alongside your existing LIS, ERP, CRMs, and communication tools—no rip‑and‑replace required.</p>
+                    <h4>Plugs into your stack</h4>
+                    <p>Designed to work next to LIS, ERP, and procurement tools so you don’t have to rip out what already works.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <!-- Contact -->
+    <section class="section contact" id="contact">
         <div class="section-inner">
-            <h2 class="section-title">Ready to see it in your lab?</h2>
-            <p class="section-subtitle">Share a bit about your environment and we’ll walk you through what Otomate.Work could look like for your team.</p>
+            <h2 class="section-title">See OtoFlo on your inventory</h2>
+            <p class="section-subtitle">We’ll walk through your current setup, identify quick wins, and sketch how an AI inventory layer would sit on top of what you already use.</p>
             
             <div class="contact-card">
-                <h3>Schedule a 20‑minute intro</h3>
+                <h3>Request a working session</h3>
                 <a href="mailto:support@otomate.work">support@otomate.work</a>
-                <p>We’ll map your current tools, identify quick wins, and outline a phased rollout that fits your operations and compliance needs.</p>
+                <p>Share a snapshot of your current inventory process and we’ll tailor the session around your tests, sites, and constraints.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Otomate.Work. All rights reserved. | Intelligent automation for diagnostic laboratories.</p>
+        <p>&copy; 2025 Otomate.Work. All rights reserved. | AI inventory for diagnostic laboratories.</p>
     </footer>
 
     <script>
@@ -730,20 +758,15 @@
             });
         });
 
-        // Add scroll effect to navigation
-        let lastScroll = 0;
+        // Nav shadow on scroll
         const nav = document.querySelector('nav');
-
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.style.boxShadow = '0 5px 18px rgba(15, 23, 42, 0.16)';
+            if (currentScroll > 80) {
+                nav.style.boxShadow = '0 16px 40px rgba(0,0,0,0.7)';
             } else {
                 nav.style.boxShadow = 'none';
             }
-            
-            lastScroll = currentScroll;
         });
     </script>
 </body>
