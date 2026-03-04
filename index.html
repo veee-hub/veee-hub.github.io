@@ -6,12 +6,12 @@
     <title>Otomate.Work - AI Solutions for Diagnostic Labs</title>
     <style>
         :root {
-            --color-primary: #0ea5e9;
-            --color-secondary: #8b5cf6;
-            --color-accent: #06b6d4;
-            --color-dark: #0f172a;
-            --color-darker: #020617;
-            --color-light: #f8fafc;
+            --color-primary: #258BCB;   /* logo primary blue */
+            --color-secondary: #6C5CE7; /* purple */
+            --color-accent: #00D9FF;    /* cyan accent */
+            --color-dark: #2D3436;      /* charcoal */
+            --color-darker: #020617;    /* deep background */
+            --color-light: #F8F9FA;     /* off-white */
             --color-gray: #64748b;
             --color-success: #10b981;
         }
@@ -35,10 +35,10 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 23, 42, 0.95);
+            background: #2D3436;
             backdrop-filter: blur(10px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            border-bottom: 1px solid rgba(37, 139, 203, 0.35);
         }
 
         .nav-container {
@@ -93,7 +93,7 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--color-darker) 0%, #1e1b4b 100%);
+            background: linear-gradient(135deg, #2D3436 0%, #020617 100%);
             padding-top: 80px;
         }
 
@@ -102,7 +102,7 @@
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(37, 139, 203, 0.20) 0%, transparent 70%);
             border-radius: 50%;
             top: -250px;
             right: -100px;
@@ -114,7 +114,7 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.18) 0%, transparent 70%);
             border-radius: 50%;
             bottom: -200px;
             left: -100px;
@@ -139,7 +139,7 @@
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, var(--color-primary) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--color-primary) 60%, var(--color-accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -164,12 +164,12 @@
             border-radius: 50px;
             font-weight: 600;
             transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(37, 139, 203, 0.5);
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 15px 40px rgba(37, 139, 203, 0.7);
         }
 
         /* Services Section */
@@ -183,7 +183,7 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, var(--color-accent) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--color-accent) 60%, var(--color-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -205,8 +205,8 @@
         }
 
         .service-card {
-            background: linear-gradient(135deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: linear-gradient(135deg, rgba(45, 52, 54, 0.75) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(37, 139, 203, 0.35);
             border-radius: 20px;
             padding: 3rem;
             position: relative;
@@ -226,7 +226,7 @@
 
         .service-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(139, 92, 246, 0.5);
+            border-color: rgba(0, 217, 255, 0.7);
         }
 
         .service-icon {
@@ -302,7 +302,7 @@
         }
 
         .benefit-shift {
-            margin-left: 40px; /* equal shift for selected items */
+            margin-left: 40px;
         }
 
         .benefit-icon {
@@ -335,8 +335,8 @@
         .contact-info {
             margin-top: 3rem;
             padding: 3rem;
-            background: linear-gradient(135deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: linear-gradient(135deg, rgba(45, 52, 54, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(37, 139, 203, 0.35);
             border-radius: 20px;
         }
 
@@ -368,7 +368,7 @@
             background: var(--color-dark);
             padding: 2rem;
             text-align: center;
-            border-top: 1px solid rgba(139, 92, 246, 0.1);
+            border-top: 1px solid rgba(37, 139, 203, 0.35);
         }
 
         footer p {
