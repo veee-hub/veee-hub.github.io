@@ -22,7 +22,6 @@
             box-sizing: border-box;
         }
 
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
             line-height: 1.6;
@@ -51,12 +50,21 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
@@ -395,7 +403,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">Otomate.Work</div>
+            <div class="logo">
+                <img src="logo.svg" alt="Otomate.Work logo">
+                <span>Otomate.Work</span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#services">Services</a></li>
                 <li><a href="#benefits">Benefits</a></li>
